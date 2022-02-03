@@ -1,0 +1,47 @@
+
+{% extends 'header.html' %} {% block content %}
+
+<section class="banner-bottom py-5" style="background-color: white;">
+    <div class="container">
+        <div class="content-grid">
+            <div class="text-center icon">
+                <span class="fa fa-user-circle-o"></span>
+            </div>
+            <div class="content-bottom">
+                <form action="/booking/" method="POST" >
+                    {% csrf_token %}
+                    <div class="field-group">
+
+                        <div class="content-input-field">
+                            <input name="bookingdatefrom" id="bookingdatefrom" type="date" value="" placeholder="bookingdatefrom " required="">
+                        </div>
+                    </div>
+                    <div class="field-group">
+
+                        <div class="content-input-field">
+                            <input name="bookingdateto" id="bookingdateto" type="date" value="" placeholder="bookingdateto " required="">
+                        </div>
+                    </div>
+
+                    
+
+
+
+                  
+                    <div class="content-input-field">
+                        <button type="submit" class="btn">register</button>
+                    </div>
+                    <div class="list-login-bottom text-center mt-lg-5 mt-4">
+
+                        <a href="#" class="">By clicking Signup, I agree to your terms</a>
+
+
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

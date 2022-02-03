@@ -1,0 +1,60 @@
+
+{% extends 'header.html' %} {% block content %}
+
+<section class="banner-bottom py-5" style="background-color: white;">
+    <div class="container">
+        <div class="content-grid">
+            <div class="text-center icon">
+                <span class="fa fa-user-circle-o"></span>
+            </div>
+            <div class="content-bottom">
+                <form action="/seller_reg/" method="POST">
+                    {% csrf_token %}
+                    <div class="field-group">
+
+                        <div class="content-input-field">
+                            <input name="s_name" id="s_name" type="text" value="" placeholder=" Name" required="">
+                        </div>
+                    </div>
+                    <div class="field-group">
+
+                        <div class="content-input-field">
+                            <input name="s_username" id="s_username" type="text" value="" placeholder="User name" required="">
+                        </div>
+                    </div>
+                    <div class="field-group">
+                        <div class="content-input-field">
+                            <input name="s_password" id="s_password" type="Password" placeholder="Password">
+                        </div>
+                    </div>
+                    <div class="field-group">
+
+                        <div class="content-input-field">
+                            <input name="s_email" id="s_email" type="email" value="" placeholder="User Email" required="">
+                        </div>
+                    </div>
+                   
+                    <div class="field-group">
+
+                        <div class="content-input-field">
+                            <input name="s_phone_no" id="s_phone_no" type="tel" value="" placeholder="UserPhone" required="">
+                        </div>
+                    </div>
+                  
+                    <div class="content-input-field">
+                        <button type="submit" class="btn">Sign Up</button>
+                    </div>
+                    <div class="list-login-bottom text-center mt-lg-5 mt-4">
+
+                        <a href="#" class="">By clicking Signup, I agree to your terms</a>
+
+
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

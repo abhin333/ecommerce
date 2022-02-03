@@ -1,0 +1,56 @@
+
+{% extends 'header.html' %} {% block content %}
+
+<section class="banner-bottom py-5" style="background-color: white;">
+    <div class="container">
+        <div class="content-grid">
+            <div class="text-center icon">
+                <span class="fa fa-user-circle-o"></span>
+            </div>
+            <div class="content-bottom">
+                <form action="/product_reg/" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="field-group">
+
+                        <div class="content-input-field">
+                            <input name="p_name" id="p_name" type="text" value="" placeholder="product Name" required="">
+                        </div>
+                    </div>
+
+                    <div class="form-floating">
+                        <textarea class="form-control-content-input-field" placeholder="discreption" name="dis" id="dis" style="height: 100px"></textarea>
+                        
+                      </div>
+
+
+
+                    <div class="field-group">
+                        <div  class="content-input-field" >
+                        <input type="file" name="img" id="img" placeholder="choose image"value=""/>
+                    </div>
+                    </div>
+                    <div class="field-group">
+
+                        <div class="content-input-field">
+                            <input name="price" id="price"  type="number"value="" placeholder="price" required="">
+                        </div>
+                    </div>
+                  
+                  
+                    <div class="content-input-field">
+                        <button type="submit" class="btn">register</button>
+                    </div>
+                    <div class="list-login-bottom text-center mt-lg-5 mt-4">
+
+                        <a href="#" class="">By clicking Signup, I agree to your terms</a>
+
+
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
