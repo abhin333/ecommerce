@@ -10,9 +10,10 @@ urlpatterns=[
     path('product_reg/',views.product_reg),
     path('seller_reg/',views.seller_reg),
     path('seller_login/',views.seller_login),
-    path('seller_logout/',views.seller_logout),
     path('productview/',views.productview),
     path('product_update/',views.productupdate),
+    path('seller_update/',views.sellerupdate),
+
 
 
     # path('booking/',views.booking),

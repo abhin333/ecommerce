@@ -45,10 +45,6 @@ def login(request):
         print("eeeeeeeeeeeeeeeeeeeeeeeeeeeee")
         return render(request,'login.html')
 
-def logout(request):
-    if request.session.has_key('uid'):
-        del request.session['uid']
-    return render(request,'index.html')
 
 def product_reg(request):
     if request.session.has_key('sid'):
@@ -81,6 +77,27 @@ def seller_reg(request):
         return render(request,'seller.html')
     else:
         return render(request,'seller.html')
+
+
+def sellerupdate(request):
+         if request.method=='POST':
+            sid=request.POST['sid']
+            s_name=request.POST['s_name']
+            s_username=request.POST['s_username']
+            s_email=request.POST['s_email']
+            s_password=request.POST['s_password']
+            s_phone_no=request.POST['s_phone_no']
+            tb=seller_tb.objects.filter(id=sid).update(s_name=s_name,s_username=s_username,s_email=s_email,s_password=s_password,s_phone_no=s_phone_no)
+            tb.save()
+            return render(request,'seller_profile.html')
+         else:
+             sid=request.GET('sid')
+             tb=seller_tb.objects.filter(id=sid)
+             return render(request,'seller_profile.html',{'seller':tb})
+
+
+
+
 
 
 #USER FORIGN KEY
@@ -120,7 +137,6 @@ def seller_reg(request):
 
 
 # def booking(request):
-#      if request.session.has_key('sid'):
 #          if request.session.has_key('uid'):
 #              if request.method=='POST':
 #                  sellerid=request.session['sid']
@@ -144,22 +160,28 @@ def seller_login(request):
     if request.method=='POST':
         username=request.POST['username']
         password=request.POST['password']
+        print("dshgsgggsgsgd",username,password)
         seller=seller_tb.objects.filter(s_username=username, s_password=password)
+        print(seller,"--------------")
         for x in seller:
+            print("for loooooooooooooooooooooooooooop")
             name=x.s_username
             pwd=x.s_password
             if username==name and pwd==password:
                 request.session['sid']=x.id
                 return render(request,'index.html',{'success':'successfuly  login'})
-            else:
-                return render(request,'sellerlogin.html',{'error':'invalid retry'})
+        return render(request,'sellerlogin.html',{'error':'invalid retry'})
      
     else:
         return render(request,'sellerlogin.html')
 
-def seller_logout(request):
+def logout(request):
     if request.session.has_key('sid'):
         del request.session['sid']
+    if request.session.has_key('uid'):
+        del request.session['uid']
+
+    
     return render(request,'index.html')
 
 

@@ -34,6 +34,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     <!-- //font-awesome-icons -->
     <!-- /Fonts -->
     <link href="//fonts.googleapis.com/css?family=Hind:300,400,500,600,700" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- //Fonts -->
 
 </head>
@@ -51,7 +53,17 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 
                     <div class="forms ml-auto">
                         <a href="login.html" class="btn"><span class="fa fa-user-circle-o"></span> Sign In</a>
-                        <a href="/registeration/" class="btn"><span class="fa fa-pencil-square-o"></span> Sign Up</a>
+                        <div class="dropdown">
+                            <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                              sigin up
+                            </a>
+                          
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                              <li><a class="dropdown-item" href="/registeration/">User</a></li>
+                              <li><a class="dropdown-item" href="/seller_reg/">seller</a></li>
+                             
+                            </ul>
+                          </div>
                     </div>
                 </div>
                 <div class="nav-top-wthree">

@@ -18,7 +18,7 @@ class seller_tb(models.Model):
 
 class product_tb(models.Model):
 
-    # sid=models.ForeignKey(seller_tb, on_delete=models.CASCADE)
+    sid=models.ForeignKey(seller_tb, on_delete=models.CASCADE)
     p_name=models.CharField(max_length=10,default="")
     dis=models.CharField(max_length=100,default="")
     price=models.CharField(max_length=10000,default="")
@@ -29,8 +29,8 @@ class product_tb(models.Model):
 class booking_tb(models.Model):
     bookingdatefrom=models.DateField(max_length=100,default="")
     bookingdateto=models.DateField(max_length=100,default="")
-#     # pid=models.ForeignKey(product_tb,on_delete=models.CASCADE)
-#     # uid=models.ForeignKey(user_tb,on_delete=models.CASCADE)
-#     # sid=models.ForeignKey(user_tb,on_delete=models.CASCADE)
+    # pid=models.ForeignKey(product_tb,on_delete=models.CASCADE)
+    # uid=models.ForeignKey(user_tb,on_delete=models.CASCADE)
+    # sid=models.ForeignKey(user_tb,on_delete=models.CASCADE)
    
    
