@@ -1,5 +1,6 @@
 
 {% extends 'header.html' %} {% block content %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 <section class="banner-bottom py-5" style="background-color: white;">
     <div class="container">
@@ -8,20 +9,134 @@
                 <span class="fa fa-user-circle-o"></span>
             </div>
             <div class="content-bottom">
-                <form action="/booking/" method="POST" >
+                <style>
+                    #booking{
+                        display: none;
+                    
+                    }
+                    #price,p{
+                        display: none;
+                    }
+                </style>
+
+                <script>
+        function calculateBookingPrice() {
+        const booking = document.getElementById('booking');
+        const bookingPrice = document.getElementById('price').textContent / 7;
+        console.log(bookingPrice);
+    
+
+        let bookingAmount = document.getElementById('booking-amount');
+        let bookingFrom = document.getElementById('bookingdatefromid').value;
+        let bookingTo = document.getElementById('bookingdatetoid').value;
+
+        bookingFrom = new Date(bookingFrom);
+        bookingTo = new Date(bookingTo);
+
+        let timeDifference = bookingTo.getTime() - bookingFrom.getTime();
+        let bookingDays = timeDifference / (1000 * 60 * 60 * 24);
+
+        if (bookingDays > 0) {
+            bookingAmount.textContent = parseInt(bookingPrice * bookingDays);
+            document.getElementById('submit-btn').removeAttribute('disabled');
+            document.getElementById('price').removeAttribute('id');
+            booking.style.display = 'inline-block';
+        } else {
+            document.getElementById('booking').textContent = "Enter a valid date";
+            booking.style.display = 'inline-block';
+            booking.style.color = 'red';
+        }
+
+    }
+
+
+function date(){
+    var d=document.getElementById('bookingdatefromid').value;
+    console.log(d);
+    var currentdate=new Date();
+     d=new Date(d)
+    if(currentdate> d)
+    {
+    alert("please select after today date");
+    location.reload()
+    }
+}
+
+
+
+function datecheck()
+		{
+
+		  var fromdate=document.getElementById('bookingdatefromid').value;
+         
+          alert(fromdate);
+          var todate=document.getElementById('bookingdatetoid').value;
+		  var vv=document.getElementById('pid').value;
+          alert(vv);
+		
+		  $.ajax({
+			url:'/userbookingcheck/',
+			data:
+            
+			{
+			  'a':fromdate,
+			  'c':vv,
+              'z':todate,
+			},
+			datatype: 'json',
+			success: function(jj)
+			{ 
+                if(jj.cc=="t")
+			 { 
+			
+			  document.getElementById('notavailable').style.display="block";
+			  document.getElementById('avialable').style.display="none";
+		     }
+			  else
+			 {
+				 document.getElementById('available').style.display="block";
+				 document.getElementById('notavailable').style.display="none";
+                 calculateBookingPrice();
+
+
+			  
+			}
+			}
+		   
+			
+		
+		
+			});
+		}
+
+</script>
+
+
+                {% for x in pro %}
+                <form action="/booking/" method="POST" enctype="multipart/form-data" >
                     {% csrf_token %}
-                    <div class="field-group">
+                    <input type="hidden" id="pid" value="{{x.id}}" name="pid">
 
+                    <p id="available"></p>
+                    
+                    <div class="field-group">
                         <div class="content-input-field">
-                            <input name="bookingdatefrom" id="bookingdatefrom" type="date" value="" placeholder="bookingdatefrom " required="">
+                            <input name="bookingdatefrom" id="bookingdatefromid" type="date"  placeholder="bookingdatefrom" required onchange="date()">
                         </div>
                     </div>
                     <div class="field-group">
 
                         <div class="content-input-field">
-                            <input name="bookingdateto" id="bookingdateto" type="date" value="" placeholder="bookingdateto " required="">
+                            <input name="bookingdateto" id="bookingdatetoid" type="date"  placeholder="bookingdateto " required="" onchange="datecheck()">
                         </div>
                     </div>
+                    <p > <span id="price">{{x.price}}</span>/week</p>
+                    <p id="booking">    ammount to pay  </p><span id="booking-amount"></span></p><br>
+                    <p id="available"> date available</p>
+                    <p id="notavailable"> date not available</p>
+
+
+                    {% endfor %}
 
                     
 
@@ -29,7 +144,7 @@
 
                   
                     <div class="content-input-field">
-                        <button type="submit" class="btn">register</button>
+                        <button type="submit" id="submit-btn" class="btn" disabled>register</button>
                     </div>
                     <div class="list-login-bottom text-center mt-lg-5 mt-4">
 

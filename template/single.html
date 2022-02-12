@@ -25,12 +25,12 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     </script>
     <!-- //Meta tag Keywords -->
     <!-- Custom-Files -->
-    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="/static/css/bootstrap.css">
     <!-- Bootstrap-Core-CSS -->
-    <link rel="stylesheet" href="css/style.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="/static/css/style.css" type="text/css" media="all" />
     <!-- Style-CSS -->
     <!-- font-awesome-icons -->
-    <link href="css/font-awesome.css" rel="stylesheet">
+    <link href="/static/css/font-awesome.css" rel="stylesheet">
     <!-- //font-awesome-icons -->
     <!-- /Fonts -->
     <link href="//fonts.googleapis.com/css?family=Hind:300,400,500,600,700" rel="stylesheet">
@@ -46,7 +46,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                 <!-- nav -->
                 <div class="top-w3pvt d-flex">
                     <div id="logo">
-                        <h1> <a href="index.html"><span class="log-w3pvt">B</span>aggage</a> <label class="sub-des">Online Store</label></h1>
+                        <h1> <a href="index.html"><span class="log-w3pvt">C</span>emara</a> <label class="sub-des">Online Store</label></h1>
                     </div>
 
                     <div class="forms ml-auto">
@@ -97,25 +97,26 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     </div>
     <!-- //banner-->
     <!--/banner-bottom -->
+     {% for x in pro %}
     <section class="banner-bottom py-5">
         <div class="container py-md-5">
             <!-- product right -->
             <div class="left-ads-display wthree">
                 <div class="row">
                     <div class="desc1-left col-md-6">
-                        <img src="/static/images/bag1.png" class="img-fluid" alt="">
+                        <img src="{{x.img.url}}" class="img-fluid" alt="">
                     </div>
                     <div class="desc1-right col-md-6 pl-lg-3">
-                        <h3>Lorem ipsum dolor sit amet laoret.</h3>
-                        <h5>Rs. 499 <span>599</span> <a href="#">Click for offer</a></h5>
+                        <h3 class="shop-sing">{{x.p_name}}</h3>
+                        <h5>RS {{x.price}}/week </h5>
+                        <a href="#" class="btn btn-primary">addtocart</a>
+                         <a href="/booking/?pid={{x.id}}" class="btn btn-primary">BUY NOW</a>
                         <div class="available mt-3">
-                            <form action="#" method="post" class="w3pvt-newsletter subscribe-sec">
-                                <input type="email" name="Email" placeholder="Enter your email..." required="">
-                                <button class="btn submit">Check</button>
+                            
 
                             </form>
                             <span><a href="#">login to save in wishlist </a></span>
-                            <p>Lorem Ipsum has been the industry's standard since the 1500s. Praesent ullamcorper dui turpis.. </p>
+                            <p></p>
                         </div>
                         <div class="share-desc mt-5">
                             <div class="share text-left">
@@ -136,11 +137,9 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                 </div>
                 <div class="row sub-para-w3pvt my-5">
 
-                    <h3 class="shop-sing">Lorem ipsum dolor sit amet</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elPellentesque vehicula augue eget nisl ullamcorper, molestie blandit ipsum auctor. Mauris volutpat augue dolor.Consectetur adipisicing elit, sed do eiusmod tempor incididunt ut lab ore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco. labore et dolore magna aliqua.</p>
-                    <p class="mt-3 italic-blue">Consectetur adipisicing elPellentesque vehicula augue eget nisl ullamcorper, molestie blandit ipsum auctor. Mauris volutpat augue dolor.Consectetur adipisicing elit, sed do eiusmod tempor incididunt ut lab ore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco. labore et dolore magna aliqua.</p>
-                    <p class="mt-3">Lorem ipsum dolor sit amet, consectetur adipisicing elPellentesque vehicula augue eget nisl ullamcorper, molestie blandit ipsum auctor. Mauris volutpat augue dolor.Consectetur adipisicing elit, sed do eiusmod tempor incididunt ut lab ore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco. labore et dolore magna aliqua.</p>
-                </div>
+                    <h3 class="shop-sing">{{x.dis}}</h3>
+                   
+                   </div>
 
 
                 <!--/row-->
@@ -149,7 +148,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                     <div class="col-md-3 shop-info-grid text-center mt-4">
                         <div class="product-shoe-info shoe">
                             <div class="men-thumb-item">
-                                <img src="/static/images/b1.jpg" class="img-fluid" alt="">
+                                <img src="/images/1.jpg" class="img-fluid" alt="">
 
                             </div>
                             <div class="item-info-product">
@@ -175,7 +174,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                     <div class="col-md-3 shop-info-grid text-center mt-4">
                         <div class="product-shoe-info shoe">
                             <div class="men-thumb-item">
-                                <img src="/static/images/b2.jpg" class="img-fluid" alt="">
+                                <img src="/images/1.jpg" class="img-fluid" alt="">
 
                             </div>
                             <div class="item-info-product">
@@ -201,7 +200,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                     <div class="col-md-3 shop-info-grid text-center mt-4">
                         <div class="product-shoe-info shoe">
                             <div class="men-thumb-item">
-                                <img src="/static/images/b3.jpg" class="img-fluid" alt="">
+                                <img src="/images/3.jpg" class="img-fluid" alt="">
 
                             </div>
                             <div class="item-info-product">
@@ -227,7 +226,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                     <div class="col-md-3 shop-info-grid text-center mt-4">
                         <div class="product-shoe-info shoe">
                             <div class="men-thumb-item">
-                                <img src="/static/images/b4.jpg" class="img-fluid" alt="">
+                                <img src="/images/5.jpg" class="img-fluid" alt="">
 
                             </div>
                             <div class="item-info-product">
@@ -257,6 +256,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
             </div>
         </div>
     </section>
+    {% endfor %}
     <!-- /banner-bottom -->
     <!--/newsletter -->
     <section class="newsletter-w3pvt py-5">
@@ -308,6 +308,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
         </div>
 
     </section>
+   
     <!--//shipping-->
     <!-- footer -->
     <div class="footer_agileinfo_topf py-5">

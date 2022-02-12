@@ -1,11 +1,11 @@
 from django.db import models
 
 class  user_tb(models.Model):
-    name=models.CharField(max_length=10,default="")
-    username=models.CharField(max_length=10,default="")
-    email=models.CharField(max_length=10,default="")
-    password=models.CharField(max_length=10,default="")
-    phone_no=models.CharField(max_length=10,default="")
+    name=models.CharField(max_length=100,default="")
+    username=models.CharField(max_length=100,default="")
+    email=models.CharField(max_length=100,default="")
+    password=models.CharField(max_length=100,default="")
+    phone_no=models.CharField(max_length=100,default="")
    
    
 
@@ -26,11 +26,16 @@ class product_tb(models.Model):
    
    
     
+
+
+
 class booking_tb(models.Model):
     bookingdatefrom=models.DateField(max_length=100,default="")
     bookingdateto=models.DateField(max_length=100,default="")
-    # pid=models.ForeignKey(product_tb,on_delete=models.CASCADE)
-    # uid=models.ForeignKey(user_tb,on_delete=models.CASCADE)
-    # sid=models.ForeignKey(user_tb,on_delete=models.CASCADE)
+    pid=models.ForeignKey(product_tb,on_delete=models.CASCADE)
+    uid=models.ForeignKey(user_tb,on_delete=models.CASCADE)
+    sid=models.ForeignKey(seller_tb,on_delete=models.CASCADE)
+    status=models.CharField(max_length=100,default="")
+
    
    

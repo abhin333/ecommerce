@@ -9,7 +9,7 @@
             </div>
             <div class="content-bottom">
                 {% for x in productup %}
-                <form action="/product_update/" method="POST" enctype="multipart/form-data">
+                <form action="/product_update/?pid={{x.id}}" method="POST" enctype="multipart/form-data">
                     {% csrf_token %}
                     <div class="field-group">
 
@@ -19,7 +19,7 @@
                     </div>
 
                     <div class="form-floating">
-                        <textarea class="form-control-content-input-field"      placeholder="discreption" name="dis" id="dis" style="height: 100px">{{x.dis}}</textarea>
+                        <textarea class="form-control-content-input-field"placeholder="discreption" name="dis" id="dis" style="height: 100px">{{x.dis}}</textarea>
                         
                       </div>
                       <div class="field-group">
@@ -33,17 +33,17 @@
 
                     <div class="field-group">
                         {% if x.img %}
-                        <img src="{{x.img.url}}" alt="images" width="250px" height="250px">
-                        {% else %}
+                        <img src="{{x.img.url}}" alt="images" width="250px" height="250px" >
+                     
                         {% endif %}
 
                     </div>
 
                     <label>DO YOU WANT UPDATE PHOTO </label><br>
-                    YES<input type="radio" name="imgupdate" value="Yes" id="imgupdate" class="contact-input check"> &puncsp;
+                    YES<input type="radio" name="imgupdate" value="YES" id="imgupdate" class="contact-input check"> &puncsp;
                     NO<input type="radio" name="imgupdate" value="NO" id="imgupdate" class="contact-input check"> 
                 
-                   <input type="file" name="img" id="img">
+                   <input type="file" name="imag" id="imag">
                     
                   
                   

@@ -1,0 +1,52 @@
+{% extends 'header.html' %} {% block content %}
+
+<section class="w3l-contacts-12 py-5" id="contact">
+    <div class="container py-md-4">
+        <div class="contacts12-main">
+            <div class="title-section">
+                <h3 class="main-title-w3 mb-md-5 mb-2">sellr booking view
+                    </div>
+            <table class="table table-bordered ">
+                <tr class="bg-success">
+               <th>id</th>
+               <th>username</th>
+               <th>productname</th>
+               <th>discreption</th>
+               <th>price</th>
+               <th>from</th>
+               <th>TO</th>
+               <th>image</th>
+               <th>cancel</th>
+
+            </tr>
+            {% for x in bs %}
+            <tr>
+                <td>{{forloop.counter}}</td>
+                <td>{{x.uid.name}}</td>
+                <td>{{x.pid.p_name}}</td>
+                <td>{{x.pid.dis}}</td>
+                <td>{{x.pid.price}}</td>
+                <td>{{x.bookingdatefrom}}</td>
+                <td>{{x.bookingdateto}}</td>
+
+                {% if x.pid.img %}
+                <td><a href="{{x.pid.img.url}}"><img src="{{x.pid.img.url}}" width="50px" height="50px"></a></td>
+                {% else %}
+                <td></td>
+                {% endif %}
+                <!-- <td><a href="/pt/?pid={{x.id}}">Delete</a></td> -->
+                
+            </tr>
+            {% endfor %}
+                </div>
+            </table>
+        </div>
+    </div>
+</section>
+
+
+
+
+
+
+{% endblock %}

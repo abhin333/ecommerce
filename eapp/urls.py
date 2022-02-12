@@ -13,6 +13,27 @@ urlpatterns=[
     path('productview/',views.productview),
     path('product_update/',views.productupdate),
     path('seller_update/',views.sellerupdate),
+    path('user_update/',views.userupdate),
+    path('single/',views.single),
+    path('productdlt/',views.productdlt),
+    path('ubookingview/',views.ubookingview),
+    path('sbookingview/',views.sbookingview),
+    path('booking/',views.booking),
+    path('userproductview/',views.userproductview),
+    path('bookingdlt/',views.bookingdlt),
+    path('userbookingcheck/',views.userbookingcheck),
+    path('admin-login/',views.adminlogin),
+    path('index/',views.index),
+
+
+
+
+
+
+
+
+
+
 
 
 
