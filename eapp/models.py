@@ -5,7 +5,7 @@ class  user_tb(models.Model):
     username=models.CharField(max_length=100,default="")
     email=models.CharField(max_length=100,default="")
     password=models.CharField(max_length=100,default="")
-    phone_no=models.CharField(max_length=100,default="")
+    phone_no=models.CharField(max_length=12,default="")
    
    
 
@@ -13,8 +13,9 @@ class seller_tb(models.Model):
     s_name=models.CharField(max_length=10,default="")
     s_username=models.CharField(max_length=10,default="")
     s_password=models.CharField(max_length=10,default="")
-    s_email=models.CharField(max_length=10,default="")
-    s_phone_no=models.CharField(max_length=10,default="")
+    s_email=models.CharField(max_length=50,default="")
+    s_phone_no=models.CharField(max_length=12,default="")
+    authN=models.CharField(max_length=100, default='')
 
 class product_tb(models.Model):
 

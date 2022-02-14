@@ -1,0 +1,39 @@
+{% extends 'header.html' %} {% block content %}
+
+<section class="w3l-contacts-12 py-5" id="contact">
+    <div class="container py-md-4">
+        <div class="contacts12-main">
+            <div class="title-section">
+               
+                <h3 class="main-title-w3 mb-md-5 mb-2">sellerdetails
+                    </div>
+            <table class="table table-bordered ">
+                <tr class="bg-success">
+               <th>Sno</th>
+               <th>name</th>
+               <th>phone</th>
+               <th>email</th>
+              
+
+            </tr>
+            {% for x in sellerr %}
+            
+            <tr>
+                <td>{{forloop.counter}}</td>
+                <td>{{x.s_name}}</td>
+                <td>{{x.s_phone_no}}</td>
+                <td>{{x.s_email}}</td>
+            </tr>
+            {% endfor %}
+                </div>
+            </table>
+        </div>
+    </div>
+</section>
+
+
+
+
+
+
+{% endblock %}

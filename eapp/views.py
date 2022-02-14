@@ -76,7 +76,7 @@ def seller_reg(request):
         s_password = request.POST['s_password']
         s_phone_no = request.POST['s_phone_no']
         tb = seller_tb(s_name=s_name, s_email=s_email, s_username=s_username,
-                       s_password=s_password, s_phone_no=s_phone_no)
+                       s_password=s_password, s_phone_no=s_phone_no,authN="pending")
         tb.save()
         return render(request, 'seller.html')
     else:
@@ -152,7 +152,15 @@ def booking(request):
             proid= product_tb.objects.get(id=pid)
             query=product_tb.objects.all().filter(id=pid)
             for x in query:
-                 sid = x.sid
+                #  sid = x.sid     
+                #  price=int(x.price)/7
+                #  print(price,"666666666666666")
+                #  l=bookingdateto
+                #  f=bookingdatefrom
+                #  k=l-f
+                #  p=k*price
+                #  print(p,"ooooooooooooooooooooooooooo")
+                #  print(k,"jjjjjj")  
                  tb = booking_tb(bookingdatefrom=bookigdatefrom,bookingdateto=bookigdateto,pid=proid,uid=user_id,sid=sid)
                  print("kkkkkkkkkkkkkkkkkkkkkkkk")
                  tb.save()
@@ -225,8 +233,12 @@ def seller_login(request):
         for x in seller:
             name=x.s_username
             pwd=x.s_password
+            ab=x.authN
             if username==name and pwd==password:
-                request.session['sid']=x.id
+                # if ab == 'pending':
+                #     return render(request, 'sellerlogin.html', {'errr': 'Admin Yet to approve your account'})
+                # else:
+                # request.session['sid']=x.id
                 return render(request,'index.html',{'success':'successfuly  login'})
         return render(request,'sellerlogin.html',{'error':'invalid retry'})
      
@@ -238,13 +250,16 @@ def logout(request):
         del request.session['sid']
     if request.session.has_key('uid'):
         del request.session['uid']
-
-    
+    if request.session.has_key('aid'):
+        del request.session['aid']
     return render(request,'index.html')
 
 
 def productview(request):
     if request.session.has_key('sid'):
+        product_view=product_tb.objects.all()
+        return render(request,'productview.html',{"p":product_view})
+    elif request.session.has_key('aid'):
         product_view=product_tb.objects.all()
         return render(request,'productview.html',{"p":product_view})
     else:
@@ -307,6 +322,15 @@ def ubookingview(request):
     if request.session.has_key('uid'):
         uid=request.session['uid']
         bview=booking_tb.objects.filter(uid=uid)
+        # for x in bview:
+        #     price=int(x.pid.price)/7
+        #     print(price,"666666666666666")
+        #     l=x.bookingdateto
+        #     f=x.bookingdatefrom
+        #     k=l-f
+        #     p=k*price
+        #     print(p,"ooooooooooooooooooooooooooo")
+        #     print(k,"jjjjjj")   
         return render(request,'ubookingview.html',{"b":bview})
     else:
         return render(request,'login.html')
@@ -334,7 +358,7 @@ def adminlogin(request):
             pwd = x.password
             if username == name and password == pwd:
                 request.session['aid'] = x.id
-                return render(request,'index.html', {'success': 'successfuly  login'})
+                return render(request,'admin/index.html', {'success': 'successfuly  login'})
         return render(request, 'admin/login.html', {'error': 'invalid retry'})
 
     else:
@@ -344,6 +368,46 @@ def adminlogin(request):
 
 def index(request):
     return render(request, 'admin/index.html')
+
+def userview(request):
+    if request.session.has_key('aid'):
+        user=user_tb.objects.all()
+        return render(request,'admin/userdetails.html',{"usr":user})
+    else:
+        return render(request,'admin/login.html')
+
+
+def sellerview(request):
+    if request.session.has_key('aid'):
+        sellerview=seller_tb.objects.all()
+        return render(request,'admin/sellerdetails.html',{"sellerr":sellerview})
+    else:
+        return render(request,'admin/login.html')
+
+def adbooking(request):
+     if request.session.has_key('aid'):
+         book=booking_tb.objects.all()
+         return render(request,'admin/bookingdetails',{'book':book})
+     else:
+        return render(request,'admin/login.html')
+
+
+def seller_approve(request):
+     if request.session.has_key('aid'):
+        sid= request.GET['sid']
+        seller.objects.filter(id=sid).update(authN='Approved')
+        return HttpResponseRedirect('/sellerview/')
+     else:
+         return render(request, 'admin/login.html',{'msg':'please login'})
+
+
+    
+        
+
+    
+    
+
+
 
 
 

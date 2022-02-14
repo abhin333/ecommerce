@@ -24,6 +24,13 @@ urlpatterns=[
     path('userbookingcheck/',views.userbookingcheck),
     path('admin-login/',views.adminlogin),
     path('index/',views.index),
+    path('userview/',views.userview),
+    path('sellerview/',views.sellerview),
+    path('adbooking/',views.adbooking),
+    path('seller_approve/',views.seller_approve),
+
+
+
 
 
 

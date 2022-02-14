@@ -4,12 +4,13 @@
     <div class="container py-md-4">
         <div class="contacts12-main">
             <div class="title-section">
-                <h3 class="main-title-w3 mb-md-5 mb-2">sellr booking view
+               
+                <h3 class="main-title-w3 mb-md-5 mb-2">userbooking view
                     </div>
             <table class="table table-bordered ">
                 <tr class="bg-success">
                <th>id</th>
-               <th>customername</th>
+               <th>username</th>
                <th>productname</th>
                <th>discreption</th>
                <th>price</th>
@@ -17,9 +18,11 @@
                <th>TO</th>
                <th>image</th>
                <th>cancel</th>
+               <td>status</td>
 
             </tr>
-            {% for x in bs %}
+            {% for x in book %}
+            
             <tr>
                 <td>{{forloop.counter}}</td>
                 <td>{{x.uid.name}}</td>
@@ -28,14 +31,20 @@
                 <td>{{x.pid.price}}</td>
                 <td>{{x.bookingdatefrom}}</td>
                 <td>{{x.bookingdateto}}</td>
-
+                
+            
                 {% if x.pid.img %}
                 <td><a href="{{x.pid.img.url}}"><img src="{{x.pid.img.url}}" width="50px" height="50px"></a></td>
                 {% else %}
                 <td></td>
                 {% endif %}
-                <!-- <td><a href="/pt/?pid={{x.id}}">Delete</a></td> -->
-                
+                {% if x.status == 'cancelled' %}
+                <td></td>
+                {% else %}
+                <td><a href="/bookingdlt/?bid={{x.id}}" > cancel</a></td>
+                {% endif %}
+
+               <td>{{x.status}}</td>
             </tr>
             {% endfor %}
                 </div>
