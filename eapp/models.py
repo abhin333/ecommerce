@@ -15,7 +15,7 @@ class seller_tb(models.Model):
     s_password=models.CharField(max_length=10,default="")
     s_email=models.CharField(max_length=50,default="")
     s_phone_no=models.CharField(max_length=12,default="")
-    authN=models.CharField(max_length=100, default='')
+    authN=models.CharField(max_length=100, default='pending')
 
 class product_tb(models.Model):
 
@@ -37,6 +37,11 @@ class booking_tb(models.Model):
     uid=models.ForeignKey(user_tb,on_delete=models.CASCADE)
     sid=models.ForeignKey(seller_tb,on_delete=models.CASCADE)
     status=models.CharField(max_length=100,default="")
+    # price=models.CharField(max_length=100,default="")
+
+
+
+    
 
    
    

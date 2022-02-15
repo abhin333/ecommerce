@@ -41,6 +41,9 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     #error{
         display: none;
     }
+    #approval{
+        display: none;
+    }
 </style>
 
 <body>
@@ -122,9 +125,10 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                             </div>
                         </div>
                         <div class="content-input-field">
-                            <button type="submit" class="btn">Sign In</button>
+                            <button type="submit" class="btn" >Sign In</button>
                         </div>
-                        <p id='error'>{errr}</p>
+                        <p id='error'>{{error}}</p>
+                        <p id="approval">{{app}}</p>
                         <ul class="list-login">
                             <li class="switch-slide">
                                 <label class="switch">

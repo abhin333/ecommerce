@@ -78,8 +78,9 @@
                             <!-- //nav -->
                             <div class="search-form ml-auto">
                                 <div class="form-w3layouts-grid">
-                                    <form action="#" method="post" class="newsletter">
-                                        <input class="search" type="search" placeholder="Search here..." required="">
+                                    <form action="/search/" method="post" class="newsletter">
+                                        {% csrf_token %}
+                                        <input class="search" name="search" type="search" placeholder="Search wrfefhere..." required="">
                                         <button class="form-control btn" value=""><span class="fa fa-search"></span></button>
                                     </form>
                                 </div>
@@ -89,7 +90,7 @@
                     </div>
                     </header>
                         
-                          {% elif request.session.sid  %}
+                          {% elif request.session.sid %}
         
                         <a href="/logout/" class="btn"><span class="fa fa-user-circle-o"></span> Logout</a> 
                         
@@ -122,8 +123,9 @@
                     <!-- //nav -->
                     <div class="search-form ml-auto">
                         <div class="form-w3layouts-grid">
-                            <form action="#" method="post" class="newsletter">
-                                <input class="search" type="search" placeholder="Search here..." required="">
+                            <form action="/search/" method="post" class="newsletter">
+                                {% csrf_token %}
+                                <input class="search" name="search" type="search" placeholder="Search wrfefhere..." required="">
                                 <button class="form-control btn" value=""><span class="fa fa-search"></span></button>
                             </form>
                         </div>
@@ -134,7 +136,7 @@
             </header>
                     
 
-                        {% else%}
+                        {% else %}
                         
                         <!-- <a href="/seller_login/" class="btn"><span class="fa fa-user-circle-o"></span> Sign In</a> -->
                         <div class="dropdown">
@@ -186,8 +188,9 @@
                     <!-- //nav -->
                     <div class="search-form ml-auto">
                         <div class="form-w3layouts-grid">
-                            <form action="#" method="post" class="newsletter">
-                                <input class="search" type="search" placeholder="Search here..." required="">
+                            <form action="/search/" method="post" class="newsletter">
+                                {% csrf_token %}
+                                <input class="search" name="search" type="search" placeholder="Search wrfefhere..." required="">
                                 <button class="form-control btn" value=""><span class="fa fa-search"></span></button>
                             </form>
                         </div>

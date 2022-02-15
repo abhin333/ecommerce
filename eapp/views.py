@@ -145,14 +145,14 @@ def booking(request):
             print("sssssssssssssssssssss")
             pid = request.POST['pid']
             userid = request.session['uid']
-            bookigdatefrom = request.POST['bookingdatefrom']
-            bookigdateto = request.POST['bookingdateto']
+            bookingdatefrom = request.POST['bookingdatefrom']
+            bookingdateto = request.POST['bookingdateto']
             productid = product_tb.objects.get(id=pid)
             user_id = user_tb.objects.get(id=userid)
             proid= product_tb.objects.get(id=pid)
             query=product_tb.objects.all().filter(id=pid)
             for x in query:
-                #  sid = x.sid     
+                 sid = x.sid     
                 #  price=int(x.price)/7
                 #  print(price,"666666666666666")
                 #  l=bookingdateto
@@ -161,7 +161,7 @@ def booking(request):
                 #  p=k*price
                 #  print(p,"ooooooooooooooooooooooooooo")
                 #  print(k,"jjjjjj")  
-                 tb = booking_tb(bookingdatefrom=bookigdatefrom,bookingdateto=bookigdateto,pid=proid,uid=user_id,sid=sid)
+                 tb = booking_tb(bookingdatefrom=bookingdatefrom,bookingdateto=bookingdateto,pid=proid,uid=user_id,sid=sid)
                  print("kkkkkkkkkkkkkkkkkkkkkkkk")
                  tb.save()
                 
@@ -178,7 +178,7 @@ def booking(request):
 def bookingdlt(request):
     if request.session.has_key('uid'):
         bid=request.GET['bid']
-        booking_tb.objects.filter(id=bid).update(status="cancelled")
+        booking_tb.objects.filter(id=bid).delete()
         return HttpResponseRedirect('/ubookingview/')
     else:
         return render(request,'login.html')
@@ -228,29 +228,29 @@ def seller_login(request):
         username=request.POST['username']
         password=request.POST['password']
         print("dshgsgggsgsgd",username,password)
-        seller=seller_tb.objects.filter(s_username=username, s_password=password)
+        seller=seller_tb.objects.filter(s_username=username, s_password=password,authN='approved')
         print(seller,"--------------")
-        for x in seller:
-            name=x.s_username
-            pwd=x.s_password
-            ab=x.authN
+        if seller:
+            for x in seller:
+                name=x.s_username
+                pwd=x.s_password
+                auth=x.authN
             if username==name and pwd==password:
-                # if ab == 'pending':
-                #     return render(request, 'sellerlogin.html', {'errr': 'Admin Yet to approve your account'})
-                # else:
-                # request.session['sid']=x.id
+                request.session['sid'] = x.id
                 return render(request,'index.html',{'success':'successfuly  login'})
-        return render(request,'sellerlogin.html',{'error':'invalid retry'})
-     
+            else:
+                return render(request,'sellerlogin.html',{'error':'invalid retry'})
+        else:
+            return render(request,'sellerlogin.html',{'app':'please wait admin is not approved'})
     else:
         return render(request,'sellerlogin.html')
 
 def logout(request):
     if request.session.has_key('sid'):
         del request.session['sid']
-    if request.session.has_key('uid'):
+    elif request.session.has_key('uid'):
         del request.session['uid']
-    if request.session.has_key('aid'):
+    elif request.session.has_key('aid'):
         del request.session['aid']
     return render(request,'index.html')
 
@@ -280,32 +280,35 @@ def userproductview(request):
 
 
 def productupdate(request):
-    if request.method=='POST':
-        pid=request.GET['pid']
-        p_name=request.POST['p_name']
-        dis=request.POST['dis']
-        price=request.POST['price']
-        imgup=request.POST['imgupdate']
-        if imgup=='Yes':
-            image1=request.FILES['imag']
-            oldrec=product_tb.objects.all().filter(id=pid)
-            updrec=product_tb.objects.get(id=pid)
-            for x in oldrec:
-                imgurl=x.img.url
-                pathtoimage=os.path.dirname(os.path.dirname(os.path.abspath(__file__)))+imgurl
-                if os.path.exists(pathtoimage):
-                    os.remove(pathtoimage)
-                    print('Successfully deleted')
-            updrec.img=image1
-            updrec.save()
-        elif imgup=='NO':
+    if request.session.has_key('sid'):
+        if request.method=='POST':
+            pid=request.GET['pid']
+            p_name=request.POST['p_name']
+            dis=request.POST['dis']
+            price=request.POST['price']
+            imgup=request.POST['imgupdate']
+            if imgup=='YES':
+                image1=request.FILES['imag']
+                oldrec=product_tb.objects.all().filter(id=pid)
+                updrec=product_tb.objects.get(id=pid)
+                for x in oldrec:
+                     imgurl=x.img.url
+                     pathtoimage=os.path.dirname(os.path.dirname(os.path.abspath(__file__)))+imgurl
+                     if os.path.exists(pathtoimage):
+                        os.remove(pathtoimage)
+                        print('Successfully deleted')
+                updrec.img=image1
+                updrec.save()
+            # return HttpResponseRedirect('/productview/')
+        # elif imgup=='NO':
             product_tb.objects.filter(id=pid).update( p_name=p_name,dis=dis,price=price)
-            return HttpResponseRedirect('/product_update/')
+            return HttpResponseRedirect('/productview/')
+        else:
+            productid=request.GET['pid']
+            tea=product_tb.objects.filter(id=productid)
+            return render(request,'productupdate.html',{'productup':tea})
     else:
-        productid=request.GET['pid']
-        tea=product_tb.objects.filter(id=productid)
-        return render(request,'productupdate.html',{'productup':tea})
-
+        return HttpResponseRedirect("/seller_login/")
 
 
 
@@ -387,7 +390,7 @@ def sellerview(request):
 def adbooking(request):
      if request.session.has_key('aid'):
          book=booking_tb.objects.all()
-         return render(request,'admin/bookingdetails',{'book':book})
+         return render(request,'admin/bookingdetails.html',{'book':book})
      else:
         return render(request,'admin/login.html')
 
@@ -395,10 +398,38 @@ def adbooking(request):
 def seller_approve(request):
      if request.session.has_key('aid'):
         sid= request.GET['sid']
-        seller.objects.filter(id=sid).update(authN='Approved')
-        return HttpResponseRedirect('/sellerview/')
+        seller_tb.objects.filter(id=sid).update(authN='Approved')
+        return HttpResponseRedirect('/sellerapprov/')
      else:
          return render(request, 'admin/login.html',{'msg':'please login'})
+
+def sellerapprov(request):
+    if request.session.has_key('aid'):
+        sellerview=seller_tb.objects.all()
+        return render(request,'admin/approval.html',{"approvall":sellerview})
+    else:
+        return render(request,'admin/login.html')
+
+
+def seller_disapproval(request):
+    if request.session.has_key('aid'):
+        sid=request.GET['sid']
+        sellertb=seller_tb.objects.filter(id=sid).delete()
+        return HttpResponseRedirect("/sellerapprov/")
+    else:
+        return render(request,'admin/login.html')
+
+
+def search(request):
+    if request.method=='POST':
+        search_term = request.POST['search']
+        product = product_tb.objects.all().filter(p_name__icontains=search_term) 
+        return render(request, 'userproductview.html', {'pro' : product, 'search_term': search_term })
+    else:
+        return render(request, 'userproductview.html')
+
+
+
 
 
     

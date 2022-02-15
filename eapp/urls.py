@@ -28,6 +28,12 @@ urlpatterns=[
     path('sellerview/',views.sellerview),
     path('adbooking/',views.adbooking),
     path('seller_approve/',views.seller_approve),
+    path('sellerapprov/',views.sellerapprov),
+    path('seller_disapproval/',views.seller_disapproval),
+    path('search/',views.search),
+
+
+
 
 
 
