@@ -27,7 +27,8 @@
     <link rel="stylesheet" href="/static/css/style.css" type="text/css" media="all" />
     <!-- Style-CSS -->
     <!-- font-awesome-icons -->
-    <link href="/static/css/font-awesome.css" rel="stylesheet">
+    <!-- <link href="/static/css/font-awesome.css" rel="stylesheet"> -->
+    <script src="https://kit.fontawesome.com/5a07ad8b55.js" crossorigin="anonymous"></script>
     <!-- //font-awesome-icons -->
     <!-- /Fonts -->
     <link href="/static/css/fonts.googleapis.com/css?family=Hind:300,400,500,600,700" rel="stylesheet">
@@ -47,7 +48,7 @@
                     <div id="logo">
                         <h1> <a href="index.html"><span class="log-w3pvt">C</span>emara</a> <label class="sub-des">Online Store</label></h1>
                     </div>
-
+                
                     <div class="forms ml-auto">
                         {% if request.session.uid %}
                         <a href="/logout/" class="btn"><span class="fa fa-user-circle-o"></span> Logout</a>
@@ -210,6 +211,39 @@
         <!-- //header -->
         {% block content %}
         {% endblock%}
+        <style type="text/css">
+            .whats-app {
+                       position: fixed;
+                       width: 60px;
+                       height: 60px;
+                       bottom: 40px;
+                       background-color: #25d366;
+                       color: #FFF;
+                       border-radius: 50px;
+                       text-align: center;
+                       font-size: 30px;
+                       box-shadow: 2px 2px 3px #999;
+                       z-index: 100;
+                       left: 15px;
+                       
+                   }
+            .whats-app:hover{
+                animation: spin 1s linear infinite;
+
+            }
+            @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+       
+                   .my-float {
+                       margin-top: 16px;
+                   }
+       </style>
+      
+        <a href="https://wa.me/917902314666?text=hi" class="whats-app">
+            <i class="fa fa-whatsapp my-float"></i>
+        </a>
 
         <div class="footer_agileinfo_topf py-5">
             <div class="container py-md-5">
