@@ -217,7 +217,7 @@
                        width: 60px;
                        height: 60px;
                        bottom: 40px;
-                       background-color: #25d366;
+                       background-color:#7ae184;
                        color: #FFF;
                        border-radius: 50px;
                        text-align: center;
@@ -225,10 +225,25 @@
                        box-shadow: 2px 2px 3px #999;
                        z-index: 100;
                        left: 15px;
+                       -moz-transition: all 0.4s;
+    -o-transition: all 0.4s;
+    -ms-transition: all 0.4s;
+    transition: all 0.4s;
+                       
                        
                    }
             .whats-app:hover{
-                animation: spin 1s linear infinite;
+                /* animation: spin 1s linear infinite; */
+                -moz-transform: rotate(360deg);
+    -webkit-transform: rotate(360deg);
+    -ms--transform: rotate(360deg);
+    transform: rotate(360deg);
+    -webkit-transition: all 0.4s;
+    -moz-transition: all 0.4s;
+    -o-transition: all 0.4s;
+    -ms-transition: all 0.4s;
+    transition: all 0.4s;
+
 
             }
             @keyframes spin {
@@ -236,13 +251,63 @@
         100% { transform: rotate(360deg); }
       }
        
-                   .my-float {
+                   .my-float{
                        margin-top: 16px;
                    }
+
+
+
+
+
+                   .phone {
+                       position: fixed;
+                       width: 60px;
+                       height: 60px;
+                       bottom: 113px;
+                       background-color:#33b0c9;
+                       color: #FFF;
+                       border-radius: 50px;
+                       text-align: center;
+                       font-size:25px;
+                       box-shadow: 2px 2px 3px #999;
+                       z-index: 100;
+                       left: 15px;
+                       
+                       -webkit-transition: all 0.4s;
+    -moz-transition: all 0.4s;
+    -o-transition: all 0.4s;
+    -ms-transition: all 0.4s;
+    transition: all 0.4s;
+                       
+                   }
+            .phone:hover{
+                /* animation: spin 1s linear infinite; */
+              
+
+
+    -moz-transform: rotate(360deg);
+    -webkit-transform: rotate(360deg);
+    -ms--transform: rotate(360deg);
+    transform: rotate(360deg);
+    -webkit-transition: all 0.4s;
+    -moz-transition: all 0.4s;
+    -o-transition: all 0.4s;
+    -ms-transition: all 0.4s;
+    transition: all 0.4s;
+
+            }
+            /* @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(250deg); }
+      } */
        </style>
       
         <a href="https://wa.me/917902314666?text=hi" class="whats-app">
             <i class="fa fa-whatsapp my-float"></i>
+        </a>
+
+        <a href="tel:7902314666" class="phone">
+            <i class="fa fa-phone my-float"></i>
         </a>
 
         <div class="footer_agileinfo_topf py-5">
