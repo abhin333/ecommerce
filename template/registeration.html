@@ -13,6 +13,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     <!-- Meta tag Keywords -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="UTF-8" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
     <meta name="keywords" content="Baggage Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template, Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyEricsson, Motorola web design" />
     <script>
         addEventListener("load", function() {
@@ -22,6 +24,40 @@ License URL: http://creativecommons.org/licenses/by/3.0/
         function hideURLbar() {
             window.scrollTo(0, 1);
         }
+
+
+        
+  function checkUsername() {
+    var username = document.getElementById("username").value;
+    var errorMsg = document.getElementById("s_name_validator");
+    
+    
+    
+    $.ajax({
+        
+      url: '/view/',
+      data:
+      {
+          
+        'username': username
+      },
+      datatype: 'json',
+      success: function (msg) {
+        errorMsg.style.display = "inline";
+        if (msg.Message === "Username already Taken") {
+          errorMsg.style.color = "red";
+          errorMsg.textContent = `${msg.Message}`;
+          
+        }
+        else {
+          errorMsg.style.color = "green";
+          errorMsg.textContent = `${msg.Message}`;
+         
+        }
+      }
+    });
+  }
+
     </script>
     <!-- //Meta tag Keywords -->
     <!-- Custom-Files -->
@@ -124,13 +160,14 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                         <div class="field-group">
 
                             <div class="content-input-field">
-                                <input name="name" id="name" type="text" value="" placeholder="User Name" required="">
+                                <input name="name" id="name" type="text" value="" placeholder=" Name" required="">
                             </div>
                         </div>
                         <div class="field-group">
 
                             <div class="content-input-field">
-                                <input name="username" id="username" type="text" value="" placeholder="User name" required="">
+                                <input name="username" id="username" type="text" value="" placeholder="User name" onchange="checkUsername()" required="">
+                                <p id="s_name_validator"></p>
                             </div>
                         </div>
                         <div class="field-group">
@@ -152,7 +189,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                         </div>
                       
                         <div class="content-input-field">
-                            <button type="submit" class="btn">Sign Up</button>
+                            <button type="submit" class="btn" >Sign Up</button>
                         </div>
                         <div class="list-login-bottom text-center mt-lg-5 mt-4">
 

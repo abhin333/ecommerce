@@ -3,7 +3,7 @@ from platform import python_version_tuple
 from tkinter.messagebox import CANCEL
 from django.shortcuts import render
 import os
-from django.http.response import HttpResponse, HttpResponseRedirect
+from django.http.response import HttpResponse, HttpResponseRedirect,JsonResponse
 from django.shortcuts import render
 from django.http import *
 from eapp.models import *
@@ -29,6 +29,17 @@ def registeration(request):
         return render(request, 'registeration.html')
     else:
         return render(request, 'registeration.html')
+
+
+def view(request):
+    username = request.GET['username']
+    b = user_tb.objects.filter(username=username)  #Store the name, if there is a same name exist in the database
+    if b:
+        msg = {"Message":"Username already Taken"}
+    else:
+        msg = {"Message": "Username available"}
+    return JsonResponse(msg)
+
 
 
 def login(request):
@@ -136,6 +147,19 @@ def single(request):
         return render(request, 'single.html', {"pro": product_view})
     else:
         return render(request, 'sellerlogin.html')
+
+
+
+def view(request):
+    username= request.GET['username']
+    print(username)
+    print("---------------------------------------------------")
+    b = user_tb.objects.filter(username=username)  #Store the name, if there is a same name exist in the database
+    if b:
+        msg = {"Message":"Username already Taken"}
+    else:
+        msg = {"Message": "Username available"}
+    return JsonResponse(msg)
 
 
 

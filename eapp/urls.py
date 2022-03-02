@@ -31,6 +31,8 @@ urlpatterns=[
     path('sellerapprov/',views.sellerapprov),
     path('seller_disapproval/',views.seller_disapproval),
     path('search/',views.search),
+    path('view/',views.view),
+
 
 
 
