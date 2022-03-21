@@ -23,6 +23,10 @@ License URL: http://creativecommons.org/licenses/by/3.0/
             window.scrollTo(0, 1);
         }
     </script>
+    
+    <meta name="google-signin-scope" content="profile email">
+    <meta name="google-signin-client_id" content="YOUR_CLIENT_ID.apps.googleusercontent.com">
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
     <!-- //Meta tag Keywords -->
     <!-- Custom-Files -->
     <link rel="stylesheet" href="/static/css/bootstrap.css">
@@ -35,6 +39,22 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     <!-- /Fonts -->
     <link href="//fonts.googleapis.com/css?family=Hind:300,400,500,600,700" rel="stylesheet">
     <!-- //Fonts -->
+    <script>
+        function onSignIn(googleUser) {
+          // Useful data for your client-side scripts:
+          var profile = googleUser.getBasicProfile();
+          console.log("ID: " + profile.getId()); // Don't send this directly to your server!
+          console.log('Full Name: ' + profile.getName());
+          console.log('Given Name: ' + profile.getGivenName());
+          console.log('Family Name: ' + profile.getFamilyName());
+          console.log("Image URL: " + profile.getImageUrl());
+          console.log("Email: " + profile.getEmail());
+  
+          // The ID token you need to pass to your backend:
+          var id_token = googleUser.getAuthResponse().id_token;
+          console.log("ID Token: " + id_token);
+        }
+      </script>
 
 </head>
 <style>
@@ -124,6 +144,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                                 <input name="password" id="password" type="Password" placeholder="Password">
                             </div>
                         </div>
+                        <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>
                         <div class="content-input-field">
                             <button type="submit" class="btn" >Sign In</button>
                         </div>
@@ -138,7 +159,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                                 </label>
                             </li>
                             <li>
-                                <a href="#" class="text-right">Forgot password?</a>
+                                <a href="/forgotpass_seller/" class="text-right">Forgot password?</a>
                             </li>
                             <li class="clearfix"></li>
                         </ul>

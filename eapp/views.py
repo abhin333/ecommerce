@@ -1,5 +1,6 @@
 from itertools import product
 from platform import python_version_tuple
+import re
 from tkinter.messagebox import CANCEL
 from django.shortcuts import render
 import os
@@ -8,13 +9,17 @@ from django.shortcuts import render
 from django.http import *
 from eapp.models import *
 from django.contrib.auth.models import User
+from django.core.mail import send_mail
+from django.conf import settings
+import random
+import string
+import hashlib
 
-
-def reg(request):
-    return render(request, 'index.html')
 
 # Create your views here.
 
+def reg(request):
+    return render(request, 'index.html')
 
 def registeration(request):
     if request.method == 'POST':
@@ -23,8 +28,7 @@ def registeration(request):
         email = request.POST['email']
         password = request.POST['password']
         phone_no = request.POST['phone_no']
-        tb = user_tb(name=name, email=email, username=username,
-                     password=password, phone_no=phone_no)
+        tb = user_tb(name=name, email=email, username=username,password=password, phone_no=phone_no)
         tb.save()
         return render(request, 'registeration.html')
     else:
@@ -112,6 +116,118 @@ def sellerupdate(request):
             return render(request,'seller_profile.html',{'seller':tb})
     else:
         return render(request,'sellerlogin.html')
+
+
+def forgotpass(request):
+    if request.method=='POST':
+        f_email = request.POST['f_email']
+        tb = seller_tb.objects.filter(s_email=f_email)
+        for x in tb:
+            email=x.s_email
+            if email==f_email:
+                 message = f'please click this link and reset your password :http//:127.0.0.1:8000/conformation_seller/?sid={x.id}'
+                 subject = 'welcome to Whats App'
+                 email_from = settings.EMAIL_HOST_USER 
+                 recipient_list = [f_email, ] 
+                 print(recipient_list)
+                 send_mail( subject,message, email_from, recipient_list) 
+                 b = seller_tb(s_email=f_email)
+                 b.save()
+                 return render(request,'forgotpassword.html') 
+            else:
+                 return render(request,"forgotpassword.html") 
+    else:
+        return render(request,"forgotpassword.html") 
+
+
+def conformation_seller(request):
+    if request.method=='POST':
+        s_password = request.POST['s_password']
+        newpassword=request.POST['cs_password']
+        hashpass = hashlib.md5(newpassword.encode('utf8')).hexdigest()
+        sid=request.GET['sid']
+        if s_password==newpassword:
+            seller_tb.objects.filter(id=sid).update(s_password=hashpass)
+            return render(request,'index.html')
+        else:
+            return render(request,"confirmpassseller.html",{'errorrr':'password are not same please re enter the passsword'})
+    else:
+        sid=request.GET['sid']
+        query=seller_tb.objects.filter(id=sid)
+        return render(request,'confirmpassseller.html',{'query':query})
+
+
+def changepassword(request):
+    if request.session.has_key('sid'):
+        if request.method=='POST':
+            oldpassword=request.POST['oldpassword']
+            newpass=request.POST['newpass']
+            sid=request.session['sid']
+            tb=seller_tb.objects.filter(id=sid)
+            for x in tb:
+                oldpass=x.s_password
+                if oldpass==oldpassword :
+                     t=seller_tb.objects.filter(id=sid).update(s_password=newpass)
+                     return render(request,'changepassword.html',{'success':"password changed"})
+                else:
+                    return render(request,'changepassword.html',{'error':"old password is not correct"})
+        else: 
+            return render(request,'changepassword.html')
+    else:
+        return render(request,'seller_login.html')
+
+def mailchecking(request):
+    mail= request.GET['a']
+    print(mail)
+    print("---------------------------------------------------")
+    b = seller_tb.objects.filter(s_email=mail)  #Store the name, if there is a same name exist in the database
+    if b:
+        msg = {"Message":"TRUE"}
+    else:
+        msg = {"Message":"FALSE"}
+    return JsonResponse(msg)
+
+
+# def mail_sender(subject,message, recipient):
+# 	email_from =  settings.EMAIL_HOST_USER 
+# 	recipient_list = [recipient, ] 
+# 	send_mail( subject, message, email_from, recipient_list ) 
+
+
+
+# def mailmessage(request):
+#     if request.method=='POST':
+#         s_email=request.POST['f_email']
+#         subject = 'welcome to Whats App'
+#         usermessage = f'please click this link and reset your password :"http//:127.0.0.0.1:8001/?sid={{x.sid}}"'
+#         mail_sender("message recieved", usermessage,s_email)
+#         mail_sender("tindertapp@gmail.com")
+#         return render(request,"frontend/contact.html")		
+#     else:
+#         return render(request,"frontend/contact.html")
+
+
+
+
+        
+
+
+
+
+
+
+
+
+
+
+
+            
+            
+
+
+        
+
+
 
 
 def userupdate(request):

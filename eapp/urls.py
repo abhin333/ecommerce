@@ -32,6 +32,13 @@ urlpatterns=[
     path('seller_disapproval/',views.seller_disapproval),
     path('search/',views.search),
     path('view/',views.view),
+    path('forgotpass_seller/',views.forgotpass),
+    path('conformation_seller/',views.conformation_seller),
+    path('changepass/',views.changepassword),
+    path('mailchecking/',views.mailchecking),
+
+
+   
 
 
 

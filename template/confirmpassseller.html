@@ -1,0 +1,34 @@
+{% extends 'header.html' %} {% block content %}
+
+<section class="banner-bottom py-5" style="background-color: white;">
+    <div class="container">
+        <div class="content-grid">
+            <div class="text-center icon">
+                <span class="fa fa-user-circle-o"></span>
+            </div>
+            <div class="content-bottom">
+                {% for x in query %}
+                <form action="/conformation_seller/?sid={{x.id}}" method="POST">
+                    {% csrf_token %}
+                    <div class="field-group">
+
+                        <div class="content-input-field">
+                            <input name="s_password" id="s_password" type="password" value="" placeholder="password" required="">
+                        </div>
+                        <div class="content-input-field">
+                            <input name="cs_password" id="cs_password" type="password" value="" placeholder="confirm password" required="">
+                            {{errorrr}}
+                        </div>
+
+                    </div>
+                    <div class="content-input-field">
+                        <button type="submit" class="btn">Sign Up</button>
+                    </div>
+                    </form>
+                    {% endfor %}
+                    </div>
+                    </div>
+                    </div>
+
+
+{% endblock %}
