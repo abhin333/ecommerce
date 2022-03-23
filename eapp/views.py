@@ -45,6 +45,15 @@ def view(request):
     return JsonResponse(msg)
 
 
+def views(request):
+    username = request.GET['username']
+    b = seller_tb.objects.filter(username=username)  #Store the name, if there is a same name exist in the database
+    if b:
+        msg = {"Message":"Username already Taken"}
+    else:
+        msg = {"Message": "Username available"}
+    return JsonResponse(msg)
+
 
 def login(request):
     if request.method == 'POST':

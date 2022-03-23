@@ -59,6 +59,23 @@ License URL: http://creativecommons.org/licenses/by/3.0/
   }
 
     </script>
+    <script>
+function ValidateEmail()
+{   
+    var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    var mail=document.getElementById("email").value;
+    if(mail.match(mailformat))
+    {
+    alert("Valid email address!");
+    document.getElementById("btnn").removeAttribute('disabled');
+    }
+    else    
+    {
+    alert("You have entered an invalid email address!");
+
+    }      
+}
+    </script>
     <!-- //Meta tag Keywords -->
     <!-- Custom-Files -->
     <link rel="stylesheet" href="/static/css/bootstrap.css">
@@ -166,14 +183,14 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                         <div class="field-group">
 
                             <div class="content-input-field">
-                                <input name="username" id="username" type="text" value="" placeholder="User name" onchange="checkUsername()" required="">
+                                <input name="username" id="username" type="text" value="" placeholder="User name" onchange="checkUsername()"required="">
                                 <p id="s_name_validator"></p>
                             </div>
                         </div>
                         <div class="field-group">
 
                             <div class="content-input-field">
-                                <input name="email" id="email" type="email" value="" placeholder="User Email" required="">
+                                <input name="email" id="email" type="email" value="" placeholder="User Email" onchange="ValidateEmail()" required="">
                             </div>
                         </div>
                         <div class="field-group">
@@ -189,7 +206,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                         </div>
                       
                         <div class="content-input-field">
-                            <button type="submit" class="btn" >Sign Up</button>
+                            <button type="submit" class="btn" id="btnn"disabled>Sign Up</button>
                         </div>
                         <div class="list-login-bottom text-center mt-lg-5 mt-4">
 
