@@ -28,6 +28,11 @@ def registeration(request):
         email = request.POST['email']
         password = request.POST['password']
         phone_no = request.POST['phone_no']
+        message = f'thank you for register our website  as a user'
+        subject = 'camera rent'
+        email_from = settings.EMAIL_HOST_USER 
+        recipient_list = [email, ] 
+        send_mail(subject,message,email_from,recipient_list) 
         tb = user_tb(name=name, email=email, username=username,password=password, phone_no=phone_no)
         tb.save()
         return render(request, 'registeration.html')
@@ -99,8 +104,12 @@ def seller_reg(request):
         s_email = request.POST['s_email']
         s_password = request.POST['s_password']
         s_phone_no = request.POST['s_phone_no']
-        tb = seller_tb(s_name=s_name, s_email=s_email, s_username=s_username,
-                       s_password=s_password, s_phone_no=s_phone_no,authN="pending")
+        message = f'thank you for register our website as a seller '
+        subject = 'camera rent'
+        email_from = settings.EMAIL_HOST_USER 
+        recipient_list = [s_email, ] 
+        send_mail(subject,message,email_from,recipient_list) 
+        tb = seller_tb(s_name=s_name, s_email=s_email, s_username=s_username,s_password=s_password, s_phone_no=s_phone_no,authN="pending")
         tb.save()
         return render(request, 'seller.html')
     else:
@@ -156,6 +165,14 @@ def conformation_seller(request):
         hashpass = hashlib.md5(newpassword.encode('utf8')).hexdigest()
         sid=request.GET['sid']
         if s_password==newpassword:
+            message = f'Your password is channged'
+            subject = 'camera rent'
+            email_from = settings.EMAIL_HOST_USER 
+            tb=seller_tb.objects.filter(id=sid)
+            for x in tb:
+                email=x.s_email
+            recipient_list = [email, ] 
+            send_mail(subject,message,email_from,recipient_list) 
             seller_tb.objects.filter(id=sid).update(s_password=hashpass)
             return render(request,'index.html')
         else:
