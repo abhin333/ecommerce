@@ -137,3 +137,5 @@ EMAIL_HOST_USER = 'tindertapp@gmail.com'
 EMAIL_HOST_PASSWORD = 'asdf123*'
 
 
+#key
+ENCRYPT_KEY = b'iDJpljxUBBsacCZ50GpSBff6Xem0R-giqXXnBFGJ2Rs='

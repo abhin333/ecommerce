@@ -1,3 +1,5 @@
+import base64
+from email import message
 from itertools import product
 from platform import python_version_tuple
 import re
@@ -14,12 +16,19 @@ from django.conf import settings
 import random
 import string
 import hashlib
+from cryptography.fernet import Fernet 
 
 
 # Create your views here.
 
 def reg(request):
     return render(request, 'index.html')
+
+def contact(request):
+    return render(request,'contact.html')
+    
+    
+
 
 def registeration(request):
     if request.method == 'POST':
@@ -28,6 +37,7 @@ def registeration(request):
         email = request.POST['email']
         password = request.POST['password']
         phone_no = request.POST['phone_no']
+        hashpass = hashlib.md5(password.encode('utf8')).hexdigest()
         message = f'thank you for register our website  as a user'
         subject = 'camera rent'
         email_from = settings.EMAIL_HOST_USER 
@@ -52,7 +62,8 @@ def view(request):
 
 def views(request):
     username = request.GET['username']
-    b = seller_tb.objects.filter(username=username)  #Store the name, if there is a same name exist in the database
+    print("sdbyuysfd")
+    b = seller_tb.objects.filter(s_username=username)  #Store the name, if there is a same name exist in the database
     if b:
         msg = {"Message":"Username already Taken"}
     else:
@@ -143,7 +154,8 @@ def forgotpass(request):
         for x in tb:
             email=x.s_email
             if email==f_email:
-                 message = f'please click this link and reset your password :http//:127.0.0.1:8000/conformation_seller/?sid={x.id}'
+                 ss=encrypt(x.id)
+                 message = f'please click this link and reset your password :http//:127.0.0.1:8000/confirmation_seller/?sid={ss}'
                  subject = 'welcome to Whats App'
                  email_from = settings.EMAIL_HOST_USER 
                  recipient_list = [f_email, ] 
@@ -158,12 +170,17 @@ def forgotpass(request):
         return render(request,"forgotpassword.html") 
 
 
-def conformation_seller(request):
+def confirmation_seller(request):
     if request.method=='POST':
+        print("-------------------------")
         s_password = request.POST['s_password']
         newpassword=request.POST['cs_password']
         hashpass = hashlib.md5(newpassword.encode('utf8')).hexdigest()
         sid=request.GET['sid']
+
+        print("888888888888888888888888888888")
+
+        print("99999999999999999999999999999999999999999999")
         if s_password==newpassword:
             message = f'Your password is channged'
             subject = 'camera rent'
@@ -174,13 +191,42 @@ def conformation_seller(request):
             recipient_list = [email, ] 
             send_mail(subject,message,email_from,recipient_list) 
             seller_tb.objects.filter(id=sid).update(s_password=hashpass)
-            return render(request,'index.html')
+            return HttpResponseRedirect('/')
         else:
             return render(request,"confirmpassseller.html",{'errorrr':'password are not same please re enter the passsword'})
     else:
+        print("=========================") 
         sid=request.GET['sid']
+        sid=decrypt(sid)
         query=seller_tb.objects.filter(id=sid)
         return render(request,'confirmpassseller.html',{'query':query})
+
+
+
+# link cryptography code
+
+
+def encrypt(txt):
+        # convert integer etc to string first
+        txt = str(txt)
+        # get the key from settings
+        cipher_suite = Fernet(settings.ENCRYPT_KEY) # key should be byte
+        # #input should be byte, so convert the text to byte
+        encrypted_text = cipher_suite.encrypt(txt.encode('ascii'))
+        # encode to urlsafe base64 format
+        encrypted_text = base64.urlsafe_b64encode(encrypted_text).decode("ascii") 
+        print("kkkkkkkkkkkkkkkkkkkkkkkkkkkk*************************")
+        return encrypted_text
+
+
+def decrypt(txt):
+        print("mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm")
+        txt = base64.urlsafe_b64decode(txt)
+        print(txt)
+        cipher_suite = Fernet(settings.ENCRYPT_KEY)
+        decoded_text = cipher_suite.decrypt(txt).decode("ascii")     
+        return decoded_text
+
 
 
 def changepassword(request):
@@ -395,7 +441,6 @@ def seller_login(request):
         password=request.POST['password']
         print("dshgsgggsgsgd",username,password)
         seller=seller_tb.objects.filter(s_username=username, s_password=password,authN='approved')
-        print(seller,"--------------")
         if seller:
             for x in seller:
                 name=x.s_username

@@ -8,7 +8,7 @@
             </div>
             <div class="content-bottom">
                 {% for x in query %}
-                <form action="/conformation_seller/?sid={{x.id}}" method="POST">
+                <form action="/confirmation_seller/?sid={{x.id}}" method="POST">
                     {% csrf_token %}
                     <div class="field-group">
 

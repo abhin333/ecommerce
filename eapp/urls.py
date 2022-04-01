@@ -11,6 +11,7 @@ urlpatterns=[
     path('seller_reg/',views.seller_reg),
     path('seller_login/',views.seller_login),
     path('productview/',views.productview),
+    path('contact/',views.contact),
     path('product_update/',views.productupdate),
     path('seller_update/',views.sellerupdate),
     path('user_update/',views.userupdate),
@@ -32,8 +33,9 @@ urlpatterns=[
     path('seller_disapproval/',views.seller_disapproval),
     path('search/',views.search),
     path('view/',views.view),
+    path('views/',views.views),
     path('forgotpass_seller/',views.forgotpass),
-    path('conformation_seller/',views.conformation_seller),
+    path('confirmation_seller/',views.confirmation_seller),
     path('changepass/',views.changepassword),
     path('mailchecking/',views.mailchecking),
 
