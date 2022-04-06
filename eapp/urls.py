@@ -4,6 +4,7 @@ from eapp import views
 
 urlpatterns=[
     path('',views.reg),
+    path('shop/',views.shop),
     path('registeration/',views.registeration),
     path('login/',views.login),
     path('logout/',views.logout),

@@ -1,5 +1,16 @@
 {% extends 'header.html' %} {% block content %}
- 
+{% if success %}
+<script>
+    setTimeout(function(){
+        let aa=document.getElementById('aa')
+        console.log(aa.value);
+        alert(aa.value)
+        
+    },100)
+</script>
+{% endif %}
+
+<input type="hidden" value="{{success}}" id="aa">
             <section class="mid-section">
                 <div class="d-lg-flex p-0">
                     <div class="col-lg-6 bottom-w3pvt-left bottom-w3pvt-right p-lg-0">

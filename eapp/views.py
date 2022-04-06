@@ -26,6 +26,8 @@ def reg(request):
 
 def contact(request):
     return render(request,'contact.html')
+def shop(request):
+    return render(request,'shop.html')
     
     
 
@@ -43,7 +45,7 @@ def registeration(request):
         email_from = settings.EMAIL_HOST_USER 
         recipient_list = [email, ] 
         send_mail(subject,message,email_from,recipient_list) 
-        tb = user_tb(name=name, email=email, username=username,password=password, phone_no=phone_no)
+        tb = user_tb(name=name, email=email, username=username,password=hashpass, phone_no=phone_no)
         tb.save()
         return render(request, 'registeration.html')
     else:
@@ -75,7 +77,8 @@ def login(request):
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
-        user = user_tb.objects.filter(username=username, password=password)
+        hashpass = hashlib.md5(password.encode('utf8')).hexdigest()
+        user = user_tb.objects.filter(username=username, password=hashpass)
         for x in user:
             name = x.username
             pwd = x.password
@@ -115,12 +118,13 @@ def seller_reg(request):
         s_email = request.POST['s_email']
         s_password = request.POST['s_password']
         s_phone_no = request.POST['s_phone_no']
+        hashpass = hashlib.md5(s_password.encode('utf8')).hexdigest()
         message = f'thank you for register our website as a seller '
         subject = 'camera rent'
         email_from = settings.EMAIL_HOST_USER 
         recipient_list = [s_email, ] 
         send_mail(subject,message,email_from,recipient_list) 
-        tb = seller_tb(s_name=s_name, s_email=s_email, s_username=s_username,s_password=s_password, s_phone_no=s_phone_no,authN="pending")
+        tb = seller_tb(s_name=s_name, s_email=s_email, s_username=s_username,s_password=hashpass, s_phone_no=s_phone_no,authN="pending")
         tb.save()
         return render(request, 'seller.html')
     else:
@@ -439,14 +443,16 @@ def seller_login(request):
     if request.method=='POST':
         username=request.POST['username']
         password=request.POST['password']
-        print("dshgsgggsgsgd",username,password)
-        seller=seller_tb.objects.filter(s_username=username, s_password=password,authN='approved')
+        hashpass = hashlib.md5(password.encode('utf8')).hexdigest()
+        print("dshgsgggsgsgd",username,hashpass)
+        seller=seller_tb.objects.filter(s_username=username,s_password=hashpass,authN='Approved')
+        print(seller)
         if seller:
             for x in seller:
                 name=x.s_username
                 pwd=x.s_password
-                auth=x.authN
-            if username==name and pwd==password:
+               
+            if username==name and pwd==hashpass:    
                 request.session['sid'] = x.id
                 return render(request,'index.html',{'success':'successfuly  login'})
             else:
