@@ -79,17 +79,22 @@ def login(request):
         password = request.POST['password']
         hashpass = hashlib.md5(password.encode('utf8')).hexdigest()
         user = user_tb.objects.filter(username=username, password=hashpass)
-        for x in user:
-            name = x.username
-            pwd = x.password
-            if username == name and password == pwd:
+        if user:
+            for x in user:
+                name = x.username
+                pwd = x.password
+            if username == name and pwd == hashpass:
                 request.session['uid'] = x.id
-                return render(request, 'index.html', {'success': 'successfuly  login'})
-        return render(request, 'login.html', {'error': 'invalid retry'})
-
+                print(username,password)
+                return render(request, 'index.html', {'success': 'successfuly  login'}) 
+            else:
+                return render(request, 'login.html', {'error': 'invalid retry'})
+        else:
+            return render(request, 'login.html')
     else:
-
         return render(request, 'login.html')
+
+
 
 
 def product_reg(request):
@@ -281,29 +286,8 @@ def mailchecking(request):
 #         return render(request,"frontend/contact.html")		
 #     else:
 #         return render(request,"frontend/contact.html")
-
-
-
-
-        
-
-
-
-
-
-
-
-
-
-
-
             
             
-
-
-        
-
-
 
 
 def userupdate(request):
