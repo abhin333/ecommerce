@@ -39,6 +39,8 @@ urlpatterns=[
     path('confirmation_seller/',views.confirmation_seller),
     path('changepass/',views.changepassword),
     path('mailchecking/',views.mailchecking),
+    path('changepassword2/',views.changepassword2),
+
 
 
    

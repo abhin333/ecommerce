@@ -96,6 +96,34 @@ def login(request):
 
 
 
+#user password chainging............
+def changepassword2(request):
+    if request.session.has_key('uid'):
+        if request.method=='POST':
+            oldpassword=request.POST['oldpassword']
+            newpass=request.POST['newpass']
+            uid=request.session['uid']
+            hashpas= hashlib.md5(oldpassword.encode('utf8')).hexdigest()
+            hashpass = hashlib.md5(newpass.encode('utf8')).hexdigest()
+            tb=user_tb.objects.filter(id=uid)
+            for x in tb:
+                oldpass=x.password
+                if oldpass== hashpas :
+                     user_tb.objects.filter(id=uid).update(password=hashpass)
+                     return render(request,'changepassword2.html',{'success':"password changed"})
+                else:
+                    return render(request,'changepassword2.html',{'error':"old password is not correct"})
+        else: 
+            return render(request,'changepassword2.html')
+    else:
+        return render(request,'login.html')
+
+
+
+#-------------------------------------
+
+
+
 
 def product_reg(request):
     if request.session.has_key('sid'):
@@ -244,11 +272,13 @@ def changepassword(request):
             oldpassword=request.POST['oldpassword']
             newpass=request.POST['newpass']
             sid=request.session['sid']
+            hashpas= hashlib.md5(oldpassword.encode('utf8')).hexdigest()
+            hashpass= hashlib.md5(newpass.encode('utf8')).hexdigest()
             tb=seller_tb.objects.filter(id=sid)
             for x in tb:
                 oldpass=x.s_password
-                if oldpass==oldpassword :
-                     t=seller_tb.objects.filter(id=sid).update(s_password=newpass)
+                if oldpass==hashpas :
+                     seller_tb.objects.filter(id=sid).update(s_password=hashpass)
                      return render(request,'changepassword.html',{'success':"password changed"})
                 else:
                     return render(request,'changepassword.html',{'error':"old password is not correct"})
