@@ -48,26 +48,52 @@
            
     <nav aria-label="Page navigation example mt-5">
         <ul class="pagination">
+
             <li class="page-item">
-                <a class="page-link" href="#">Previous</a>
+                <a class="page-link" href="/userproductview/?page=1">first</a>
             </li>
+            {% if pro.has_previous %}
             <li class="page-item">
+                <a class="page-link" href="/userproductview/?page={{ pro.previous_page_number }}">Previous</a>
+            </li>
+            {% endif %}
+           
+            <!-- <li class="page-item">
                 <a class="page-link" href="#">1</a>
+            </li> -->
+           
+            {% if pro.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="/userproductview/?page={{ pro.next_page_number }}">NEXT</a>
             </li>
             <li class="page-item">
-                <a class="page-link" href="#">2</a>
+                <a class="page-link" href="/userproductview/?page={{ pro.paginator.num_pages }}">LAST</a>
             </li>
-            <li class="page-item">
-                <a class="page-link" href="#">3</a>
-            </li>
-            <li class="page-item">
-                <a class="page-link" href="#">Next</a>
-            </li>
+            {% endif %}
         </ul>
     </nav>
 </div>
 </section>
-    {% endblock %} 
+<!-- page next setup----------------------------- -->
+<div class="pagination navbar">
+    <span class="step-links">
+        {% if pro.has_previous %}
+            <a href="?page=1"></a>
+            <a href="/userproductview/?page={{ pro.previous_page_number }}"></a>
+        {% endif %}
+
+        <span class="current">
+            
+        </span>
+
+        {% if pro.has_next %}
+            <a href="/userproductview/?page={{ pro.next_page_number }}"></a>
+            <a href="/userproductview/?page={{ pro.paginator.num_pages }}"></a>
+        {% endif %}
+    </span>
+</div>
+<!-- ----------------------------------------------- -->
+{% endblock %} 
 
 
 

@@ -12,6 +12,7 @@ from django.http import *
 from eapp.models import *
 from django.contrib.auth.models import User
 from django.core.mail import send_mail
+from django.core.paginator import Paginator
 from django.conf import settings
 import random
 import string
@@ -502,7 +503,11 @@ def productview(request):
 def userproductview(request):
     if request.session.has_key('uid'):
         product_view=product_tb.objects.all()
-        return render(request,'userproductview.html',{"pro":product_view})
+        paginator = Paginator(product_view,2) 
+        page = request.GET.get('page')
+        p = paginator.get_page(page)
+        # return render(request,'userviewproduct.html', {"pro": p}
+        return render(request,'userproductview.html',{"pro":p})
     else:
         return render(request,'login.html')
 
