@@ -656,6 +656,17 @@ def seller_disapproval(request):
         return render(request,'admin/login.html')
 
 
+
+
+def seller_dlt(request):
+    if request.session.has_key('aid'):
+        sid=request.GET['sid']
+        sellertb=seller_tb.objects.filter(id=sid).delete()
+        return HttpResponseRedirect("/sellerview/")
+    else:
+        return render(request,'admin/login.html')
+
+
 def search(request):
     if request.method=='POST':
         search_term = request.POST['search']

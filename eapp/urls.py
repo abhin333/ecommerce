@@ -33,6 +33,7 @@ urlpatterns=[
     path('sellerapprov/',views.sellerapprov),
     path('seller_disapproval/',views.seller_disapproval),
     path('search/',views.search),
+    path('seller_dlt/',views.seller_dlt),
     path('view/',views.view),
     path('views/',views.views),
     path('forgotpass_seller/',views.forgotpass),
