@@ -21,6 +21,7 @@
                <td>status</td>
 
             </tr>
+            {% if book %}
             {% for x in book %}
             
             <tr>
@@ -47,6 +48,14 @@
                <td>{{x.status}}</td>
             </tr>
             {% endfor %}
+            {% else %}
+            <tr>
+                <td colspan="10" style="text-align: center; color: blue; font-variant-caps: all-petite-caps;" >
+
+                   no data is there
+                </td>
+            </tr>
+            {% endif %}
                 </div>
             </table>
         </div>

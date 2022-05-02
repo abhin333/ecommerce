@@ -1,3 +1,4 @@
+from ast import Or
 import base64
 from email import message
 from itertools import product
@@ -89,9 +90,9 @@ def login(request):
                 print(username,password)
                 return render(request, 'index.html', {'success': 'successfuly  login'}) 
             else:
-                return render(request, 'login.html', {'error': 'invalid retry'})
+                return render(request, 'login.html')
         else:
-            return render(request, 'login.html')
+            return render(request, 'login.html', {'error': 'invalid retry'})
     else:
         return render(request, 'login.html')
 
@@ -122,7 +123,6 @@ def changepassword2(request):
 
 
 #-------------------------------------
-
 
 
 
@@ -208,6 +208,35 @@ def forgotpass(request):
         return render(request,"forgotpassword.html") 
 
 
+
+def userforgotpass(request):
+    if request.method=='POST':
+        u_email = request.POST['u_email']
+        tb = user_tb.objects.filter(email=u_email)
+        for x in tb:
+            email=x.email
+            if email==u_email:
+                 ss=encrypt(x.id)
+                 message = f'please click this link and reset your password :http//:127.0.0.1:8000/confirmation_user/?uid={ss}'
+                 subject = 'welcome to Whats App'
+                 email_from = settings.EMAIL_HOST_USER 
+                 recipient_list = [u_email, ] 
+                 print(recipient_list)
+                 send_mail( subject,message, email_from, recipient_list) 
+                 b = user_tb(email=u_email)
+                 b.save()
+                 return render(request,'userforgotpassword.html') 
+            else:
+                 return render(request,"userforgotpassword.html") 
+    else:
+        return render(request,"userforgotpassword.html") 
+
+
+
+
+
+
+
 def confirmation_seller(request):
     if request.method=='POST':
         print("-------------------------")
@@ -241,6 +270,36 @@ def confirmation_seller(request):
 
 
 
+
+
+
+def confirmation_user(request):
+    if request.method=='POST':
+        s_password = request.POST['s_password']
+        newpassword=request.POST['cs_password']
+        hashpass = hashlib.md5(newpassword.encode('utf8')).hexdigest()
+        uid=request.GET['uid']
+        if s_password==newpassword:
+            message = f'Your password is channged'
+            subject = 'camera rent'
+            email_from = settings.EMAIL_HOST_USER 
+            tb=user_tb.objects.filter(id=uid)
+            for x in tb:
+                email=x.email
+            recipient_list = [email, ] 
+            send_mail(subject,message,email_from,recipient_list) 
+            user_tb.objects.filter(id=uid).update(password=hashpass)
+            return HttpResponseRedirect('/')
+        else:
+            return render(request,"confirmpasssuser.html",{'errorrr':'password are not same please re enter the passsword'})
+    else:
+        uid=request.GET['uid']
+        uid=decrypt(uid)
+        query=user_tb.objects.filter(id=uid)
+        return render(request,'confirmpasssuser.html',{'query':query})
+
+
+
 # link cryptography code
 
 
@@ -253,12 +312,11 @@ def encrypt(txt):
         encrypted_text = cipher_suite.encrypt(txt.encode('ascii'))
         # encode to urlsafe base64 format
         encrypted_text = base64.urlsafe_b64encode(encrypted_text).decode("ascii") 
-        print("kkkkkkkkkkkkkkkkkkkkkkkkkkkk*************************")
+       
         return encrypted_text
 
 
 def decrypt(txt):
-        print("mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm")
         txt = base64.urlsafe_b64decode(txt)
         print(txt)
         cipher_suite = Fernet(settings.ENCRYPT_KEY)
@@ -293,6 +351,19 @@ def mailchecking(request):
     print(mail)
     print("---------------------------------------------------")
     b = seller_tb.objects.filter(s_email=mail)  #Store the name, if there is a same name exist in the database
+    if b:
+        msg = {"Message":"TRUE"}
+    else:
+        msg = {"Message":"FALSE"}
+    return JsonResponse(msg)
+
+
+
+def mailcheckingg(request):
+    mail= request.GET['a']
+    print(mail)
+    print("---------------------------------------------------")
+    b = user_tb.objects.filter(email=mail)  #Store the name, if there is a same name exist in the database
     if b:
         msg = {"Message":"TRUE"}
     else:
@@ -465,7 +536,7 @@ def seller_login(request):
         if seller:
             for x in seller:
                 name=x.s_username
-                pwd=x.s_password
+                pwd=x.s_password 
                
             if username==name and pwd==hashpass:    
                 request.session['sid'] = x.id
@@ -493,7 +564,7 @@ def productview(request):
         return render(request,'productview.html',{"p":product_view})
     elif request.session.has_key('aid'):
         product_view=product_tb.objects.all()
-        return render(request,'productview.html',{"p":product_view})
+        return render(request,'admin/producttable.html',{"p":product_view})
     else:
         return render(request,'sellerlogin.html')
 
@@ -503,7 +574,7 @@ def productview(request):
 def userproductview(request):
     if request.session.has_key('uid'):
         product_view=product_tb.objects.all()
-        paginator = Paginator(product_view,2) 
+        paginator = Paginator(product_view,8) 
         page = request.GET.get('page')
         p = paginator.get_page(page)
         # return render(request,'userviewproduct.html', {"pro": p}
@@ -611,7 +682,7 @@ def index(request):
 def userview(request):
     if request.session.has_key('aid'):
         user=user_tb.objects.all()
-        return render(request,'admin/userdetails.html',{"usr":user})
+        return render(request,'admin/usertable.html',{"usr":user})
     else:
         return render(request,'admin/login.html')
 
@@ -619,14 +690,14 @@ def userview(request):
 def sellerview(request):
     if request.session.has_key('aid'):
         sellerview=seller_tb.objects.all()
-        return render(request,'admin/sellerdetails.html',{"sellerr":sellerview})
+        return render(request,'admin/data.html',{"sellerr":sellerview})
     else:
         return render(request,'admin/login.html')
 
 def adbooking(request):
      if request.session.has_key('aid'):
          book=booking_tb.objects.all()
-         return render(request,'admin/bookingdetails.html',{'book':book})
+         return render(request,'admin/bookingtable.html',{'book':book})
      else:
         return render(request,'admin/login.html')
 

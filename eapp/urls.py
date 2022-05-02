@@ -2,6 +2,7 @@ from django.http import request
 from django.urls import path
 from eapp import views
 
+
 urlpatterns=[
     path('',views.reg),
     path('shop/',views.shop),
@@ -29,6 +30,7 @@ urlpatterns=[
     path('userview/',views.userview),
     path('sellerview/',views.sellerview),
     path('adbooking/',views.adbooking),
+    path('userforgotpass/',views.userforgotpass),
     path('seller_approve/',views.seller_approve),
     path('sellerapprov/',views.sellerapprov),
     path('seller_disapproval/',views.seller_disapproval),
@@ -38,17 +40,18 @@ urlpatterns=[
     path('views/',views.views),
     path('forgotpass_seller/',views.forgotpass),
     path('confirmation_seller/',views.confirmation_seller),
+    path('confirmation_user/',views.confirmation_user),
     path('changepass/',views.changepassword),
     path('mailchecking/',views.mailchecking),
+    path('mailcheckingg/',views.mailcheckingg),
+
     path('changepassword2/',views.changepassword2),
 
 
 
    
 
-
-
-
+ 
 
 
 

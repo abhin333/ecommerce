@@ -20,6 +20,8 @@
                <td>status</td>
 
             </tr>
+            {% if b %}
+
             {% for x in b %}
             
             <tr>
@@ -49,6 +51,14 @@
                <td>{{x.status}}</td>
             </tr>
             {% endfor %}
+            {% else %}
+             <tr>
+                 <td colspan="5">
+
+                    no data is there
+                 </td>
+             </tr>
+             {% endif %}
                 </div>
             </table>
         </div>
